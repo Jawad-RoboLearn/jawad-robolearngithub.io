@@ -16,9 +16,11 @@ name: "Lighthouse Badger"
 env:
   URLS: https://jawad-robolearn.github.io
   # If any of the following env is blank, a default value is used instead
-  REPO_BRANCH: "${{ github.repository }} master" # target repository & branch e.g. 'dummy/mytargetrepo main'
+  REPO_BRANCH: Jawad-RoboLearn/jawad-robolearn.github.io master
   MOBILE_LIGHTHOUSE_PARAMS: "--only-categories=performance,accessibility,best-practices,seo --throttling.cpuSlowdownMultiplier=2"
   DESKTOP_LIGHTHOUSE_PARAMS: "--only-categories=performance,accessibility,best-practices,seo --preset=desktop --throttling.cpuSlowdownMultiplier=1"
+  REPOSITORY: Jawad-RoboLearn/jawad-robolearn.github.io
+  BRANCH: master
 
 # TRIGGERS
 on:
