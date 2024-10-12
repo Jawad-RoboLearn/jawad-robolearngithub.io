@@ -1,11 +1,3 @@
-# Lighthouse-Badger-Easy | GitHub Action Workflow
-#
-# Description: Generates, adds & updates manually/automatically Lighthouse badges & reports from one/multiple input URL(s) to the current repository & main branch with minimal settings
-# Author: Sitdisch
-# Source: https://github.com/myactionway/lighthouse-badger-workflows
-# License: MIT
-# Copyright (c) 2021 Sitdisch
-
 name: "Lighthouse Badger"
 
 ########################################################################
@@ -14,18 +6,17 @@ name: "Lighthouse Badger"
 
 # INPUTS as Secrets (env) for not manually triggered workflows
 env:
-  URLS: https://jawad-robolearn.github.io
-  REPO_BRANCH: Jawad-RoboLearn/jawad-robolearn.github.io master
-  MOBILE_LIGHTHOUSE_PARAMS: "--only-categories=performance,accessibility,best-practices,seo --throttling.cpuSlowdownMultiplier=2 --max-wait-for-load=10000"  # Added wait time
-  DESKTOP_LIGHTHOUSE_PARAMS: "--only-categories=performance,accessibility,best-practices,seo --preset=desktop --throttling.cpuSlowdownMultiplier=1 --max-wait-for-load=10000"  # Added wait time
+  URLS: 'https://jawad-robolearn.github.io'
+  REPO_BRANCH: 'Jawad-RoboLearn/jawad-robolearn.github.io master'
+  MOBILE_LIGHTHOUSE_PARAMS: '--only-categories=performance,accessibility,best-practices,seo --throttling.cpuSlowdownMultiplier=2 --max-wait-for-load=10000'
+  DESKTOP_LIGHTHOUSE_PARAMS: '--only-categories=performance,accessibility,best-practices,seo --preset=desktop --throttling.cpuSlowdownMultiplier=1 --max-wait-for-load=10000'
 
 # TRIGGERS
 on:
   page_build:
-  # schedule: # Check your schedule here => https://crontab.guru/
+  # Uncomment to enable scheduled runs
+  # schedule:
   #   - cron: '55 23 * * 0' # e.g. every Sunday at 23:55
-  #
-  # THAT'S IT; YOU'RE DONE;
   workflow_dispatch:
 
 ########################################################################
@@ -39,9 +30,9 @@ jobs:
       - name: Checkout Target Repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ env.REPOSITORY }}
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN
-          ref: ${{ env.BRANCH }}
+          repository: ${{ env.REPO_BRANCH }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: master  # Use the correct branch if it’s different
 
       - name: Checkout Lighthouse Badges Repository
         uses: actions/checkout@v4
@@ -55,4 +46,4 @@ jobs:
           urls: ${{ env.URLS }}
           mobile_lighthouse_params: ${{ env.MOBILE_LIGHTHOUSE_PARAMS }}
           desktop_lighthouse_params: ${{ env.DESKTOP_LIGHTHOUSE_PARAMS }}
-          token: ${{ secrets.LIGHTHOUSE_BADGER_TOKEN }}  # Retain your custom token if needed
+          token: ${{ secrets.LIGHTHOUSE_BADGER_TOKEN }}  # Ensure this token is set correctly
